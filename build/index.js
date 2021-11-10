@@ -7,8 +7,12 @@ var express_1 = __importDefault(require("express"));
 var http_1 = require("http");
 var socket_io_1 = require("socket.io");
 var cors_1 = __importDefault(require("cors"));
+var node_cursor_1 = require("node-cursor");
 var app = (0, express_1.default)();
 app.use((0, cors_1.default)());
+app.get("/", function (req, res) {
+    res.sendFile(__dirname + "/index.html");
+});
 var server = (0, http_1.createServer)(app);
 var port = 3001;
 server.listen(port, function () {
@@ -19,10 +23,21 @@ var io = new socket_io_1.Server(server, {
 });
 io.on("connection", function (socket) {
     console.log("Socket " + socket.id + " connected");
-    socket.on("test", function (data) {
-        console.log("Received data from " + socket.id + ":\n" + data);
+    socket.on("data", function (data) {
+        console.log("Received data from " + socket.id + ":");
+        console.log(data);
+        var _a = (0, node_cursor_1.getCursorPosition)(), x = _a.x, y = _a.y;
+        if (data.click) {
+            click(x, y);
+            return;
+        }
+        (0, node_cursor_1.setCursorPosition)({ x: data.touch.x0, y: data.touch.y0 });
     });
     socket.on("disconnect", function () {
         console.log("Socket " + socket.id + " disconnected");
     });
 });
+var click = function (x, y) {
+    (0, node_cursor_1.sendCursorEvent)({ event: node_cursor_1.cursorEvents.LEFT_DOWN, data: 0, x: x, y: y });
+    (0, node_cursor_1.sendCursorEvent)({ event: node_cursor_1.cursorEvents.LEFT_UP, data: 0, x: x, y: y });
+};

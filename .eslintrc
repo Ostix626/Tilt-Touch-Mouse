@@ -25,6 +25,7 @@
     "eol-last": 2,
     "indent": [2, 2],
     "@typescript-eslint/no-empty-function": 1,
-    "quotes": 2
+    "quotes": 2,
+    "max-len": [2, { "code": 80 }]
   }
 }

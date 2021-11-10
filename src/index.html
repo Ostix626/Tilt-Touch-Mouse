@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tilt Touch Mouse API</title>
+</head>
+<body>
+  <h1>Tilt Touch Mouse API</h1>
+  <form>
+      <label for="textarea"><b>Json Data:</b></label><br />
+      <textarea id="textarea" rows="26" cols="50"></textarea><br />
+      <button id="send_once_button">Send once</button>
+      <button id="send_1000_button">Send 1000 times</button>
+  </form>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    document.getElementById("send_once_button").addEventListener("click", (e) => {
+      e.preventDefault();
+      let data = document.getElementById("textarea").value;
+      data = JSON.parse(data);
+      socket.emit("data", data);
+    });
+    document.getElementById("send_1000_button").addEventListener("click", (e) => {
+      e.preventDefault();
+      let data = document.getElementById("textarea").value;
+      data = JSON.parse(data);
+      for (let i = 0; i < 1000; i++) {
+        data.touch.x0 += 0.7;
+        data.touch.y0 += 0.3;
+        socket.emit("data", data);
+      }
+    });
+  </script>
+</body>
+</html>
