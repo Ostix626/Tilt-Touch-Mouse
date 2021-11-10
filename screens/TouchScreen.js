@@ -2,10 +2,50 @@ import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Pressable, PanResponder } from 'react-native';
 import { Gyroscope, Accelerometer } from 'expo-sensors';
 import { PanGestureHandler } from 'react-native-gesture-handler';
+import { io } from "socket.io-client";
+import { useSelector, useDispatch } from 'react-redux';
+
 
 import Touchable from '../components/wrappers/Touchable';
 
+
+// const socket = io.connect("http://192.168.1.110:3001");
+// import {store} from '../store/store';
+// const state = store.getState();
+
+// const url = state.serverUrl.baseUrl
+// console.log("TouchScreen", url)
+// const socket = io.connect(url);
+
+var socket 
+console.log("sock", socket)
+
 const TouchScreen = props => {
+  const SERVER = useSelector(state => state.serverUrl);
+  useEffect(() => {
+    if(socket == undefined || !socket.connected) {
+      socket = io.connect(SERVER.baseUrl)
+      // console.log("TouchScreen", SERVER.baseUrl)
+    }
+    // console.log("con",socket.connected)
+  }, [])
+
+
+  //ACCELERATOR
+  const [accData, setAccData] = useState({
+    x: 0,
+    y: 0,
+    z: 0,
+  });
+
+   //GYROSCOPE
+   const [gyroData, setGyroData] = useState({
+    x: 0,
+    y: 0,
+    z: 0,
+  });
+
+  const [click, setClick] = useState(false)
 
   // TOUCH
   const [touchData, setTouchData] = useState({
@@ -76,6 +116,17 @@ const TouchScreen = props => {
     })
   ).current;
 
+  useEffect(() => {
+    const data = {
+      "click": click,
+      "touch": touchData,
+      "gyro": gyroData,
+      "acc": accData
+    }
+    socket.emit("test", data);
+    if (click) setClick(false);
+  }, [touchData, click])
+
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.container} {...subscriptionTouch? {...panResponder.panHandlers} : null}>
@@ -93,7 +144,7 @@ const TouchScreen = props => {
           y0: {touchData.y0} 
         </Text>
       </View>
-      <Touchable style={styles.button}>
+      <Touchable style={styles.button} onPressIn={() => setClick(true)}>
         <Text>CLICK</Text>
       </Touchable>
     </View>

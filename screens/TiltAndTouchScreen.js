@@ -3,10 +3,31 @@ import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Pressable, PanResponder } from 'react-native';
 import { Gyroscope, Accelerometer } from 'expo-sensors';
 import { PanGestureHandler } from 'react-native-gesture-handler';
+import { io } from "socket.io-client";
+import { useSelector, useDispatch } from 'react-redux';
 
 import Touchable from '../components/wrappers/Touchable';
 
+// const socket = io.connect("http://192.168.1.110:3001");
+// import {store} from '../store/store';
+// const state = store.getState();
+
+// const url = state.serverUrl.baseUrl
+// console.log(url)
+// const socket = io.connect(url);
+
+
+var socket 
+
 const TiltAndTouchScreen = props => {
+  const SERVER = useSelector(state => state.serverUrl);
+  useEffect(() => {
+    if(socket == undefined || !socket.connected) {
+      socket = io.connect(SERVER.baseUrl)
+    }
+  }, [])
+
+  const [click, setClick] = useState(false)
 
   // TOUCH
   const [touchData, setTouchData] = useState({
@@ -138,6 +159,16 @@ const TiltAndTouchScreen = props => {
     return () => _unsubscribeGyro();
   }, []);
   
+  useEffect(() => {
+    const data = {
+      "click": click,
+      "touch": touchData,
+      "gyro": gyroData,
+      "acc": accData
+    }
+    socket.emit("test", data);
+    if (click) setClick(false);
+  }, [touchData, gyroData, accData, click])
 
   return (
     <View style={styles.container}>
@@ -170,7 +201,7 @@ const TiltAndTouchScreen = props => {
             </Text>
           </View>
       </View>
-      <Touchable style={styles.button}>
+      <Touchable style={styles.button} onPressIn={() => setClick(true)}>
         <Text>CLICK</Text>
       </Touchable>
     </View>

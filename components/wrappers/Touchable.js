@@ -8,12 +8,14 @@ const Touchable = props => {
     return Platform.OS === 'android' ? 
     <TouchableNativeFeedback 
         onPress={props.onPress}
+        onPressIn={props.onPressIn}
         style={props.style}>
         {props.children}
     </TouchableNativeFeedback>
     : 
     <TouchableOpacity 
         onPress={props.onPress}
+        onPressIn={props.onPressIn}
         style={props.style}>
         {props.children}
     </TouchableOpacity>
