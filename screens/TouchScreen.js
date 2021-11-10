@@ -123,7 +123,7 @@ const TouchScreen = props => {
       "gyro": gyroData,
       "acc": accData
     }
-    socket.emit("test", data);
+    socket.emit("data", data);
     if (click) setClick(false);
   }, [touchData, click])
 

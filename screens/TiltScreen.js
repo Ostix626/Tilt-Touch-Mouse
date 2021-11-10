@@ -113,7 +113,7 @@ const TiltScreen = props => {
       "gyro": gyroData,
       "acc": accData
     }
-    socket.emit("test", data);
+    socket.emit("data", data);
     if (click) setClick(false);
   }, [accData, gyroData, click])
 

@@ -29,7 +29,7 @@ const ConnectScreen = props => {
 
 
   const sendToServer = () => {
-    // socket.emit("test", serverIP);
+    // socket.emit("data", serverIP);
     dispatch(setIpAddress(serverIP));
     const url = "http://" + serverIP + ":3001";
     socket = io.connect(url)
