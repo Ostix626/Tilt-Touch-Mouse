@@ -18,6 +18,9 @@ var port = 3001;
 server.listen(port, function () {
     console.log("Server listening on port: " + port);
 });
+var X0;
+var Y0;
+var NUMBER_ACTIVE_TOUCHES = 0;
 var io = new socket_io_1.Server(server, {
     cors: { origin: "http://" },
 });
@@ -31,7 +34,15 @@ io.on("connection", function (socket) {
             click(x, y);
             return;
         }
-        (0, node_cursor_1.setCursorPosition)({ x: data.touch.x0, y: data.touch.y0 });
+        if (NUMBER_ACTIVE_TOUCHES !== data.touch.numberActiveTouches) {
+            X0 = x;
+            Y0 = y;
+            NUMBER_ACTIVE_TOUCHES = data.touch.numberActiveTouches;
+        }
+        (0, node_cursor_1.setCursorPosition)({
+            x: X0 + Math.round(data.touch.dx * 2.1),
+            y: Y0 + Math.round(data.touch.dy * 2.1),
+        });
     });
     socket.on("disconnect", function () {
         console.log("Socket " + socket.id + " disconnected");

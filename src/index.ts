@@ -22,6 +22,10 @@ server.listen(port, () => {
   console.log(`Server listening on port: ${port}`);
 });
 
+let X0: number;
+let Y0: number;
+let NUMBER_ACTIVE_TOUCHES = 0;
+
 const io = new Server(server, {
   cors: { origin: "http://" },
 });
@@ -40,7 +44,16 @@ io.on("connection", (socket) => {
       return;
     }
 
-    setCursorPosition({ x: data.touch.x0, y: data.touch.y0 });
+    if (NUMBER_ACTIVE_TOUCHES !== data.touch.numberActiveTouches) {
+      X0 = x;
+      Y0 = y;
+      NUMBER_ACTIVE_TOUCHES = data.touch.numberActiveTouches;
+    }
+
+    setCursorPosition({
+      x: X0 + Math.round(data.touch.dx * 2.1),
+      y: Y0 + Math.round(data.touch.dy * 2.1),
+    });
   });
 
   socket.on("disconnect", () => {
