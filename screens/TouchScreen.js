@@ -37,6 +37,35 @@ const TouchScreen = props => {
     y: 0,
     z: 0,
   });
+  const [triggerData, setTriggerData] = useState({
+    x: 0,
+    y: 0,
+    z: 0,
+  });
+
+  const [subscriptionAcc, setSubscriptionAcc] = useState(null);
+
+  Accelerometer.setUpdateInterval(15);
+
+  const _subscribeAcc = () => {
+    setSubscriptionAcc(
+      Accelerometer.addListener(accelerometerData => {
+        setTriggerData(accelerometerData);
+      })
+    );
+  };
+
+  const _unsubscribeAcc = () => {
+    subscriptionAcc && subscriptionAcc.remove();
+    setSubscriptionAcc(null);
+    setTriggerData({x: 0, y: 0, z: 0})
+  };
+
+  useEffect(() => {
+    _subscribeAcc();
+    return () => _unsubscribeAcc();
+  }, []);
+
 
    //GYROSCOPE
    const [gyroData, setGyroData] = useState({
@@ -125,7 +154,7 @@ const TouchScreen = props => {
     }
     socket.emit("data", data);
     if (click) setClick(false);
-  }, [touchData, click])
+  }, [touchData, click, triggerData])
 
   return (
     <View style={{ flex: 1 }}>
