@@ -39,10 +39,30 @@ io.on("connection", function (socket) {
             Y0 = y;
             NUMBER_ACTIVE_TOUCHES = data.touch.numberActiveTouches;
         }
-        (0, node_cursor_1.setCursorPosition)({
-            x: X0 + Math.round(data.touch.dx * 2.1),
-            y: Y0 + Math.round(data.touch.dy * 2.1),
-        });
+        else if (data.acc.z !== 0 && NUMBER_ACTIVE_TOUCHES == 0) {
+            X0 = x;
+            Y0 = y;
+        }
+        // if(data.touch.dx != 0 && data.touch.dy != 0 &&
+        //  data.touch.numberActiveTouches == 1){
+        if (data.touch.numberActiveTouches == 1) {
+            (0, node_cursor_1.setCursorPosition)({
+                x: X0 + Math.round(data.touch.dx * 2.1),
+                y: Y0 + Math.round(data.touch.dy * 2.1),
+            });
+        }
+        else if (data.touch.numberActiveTouches == 0) {
+            (0, node_cursor_1.setCursorPosition)({
+                x: X0 + Math.round(data.acc.y * 50),
+                y: Y0 + Math.round((data.acc.x - 0.5) * 50),
+                // x: X0 + (data.acc.y * 1920),
+                // y: Y0 - ((data.acc.z - 0.5) * 1080),
+                // x: 960 + (data.acc.y * 1920),
+                // y: 1080 - (1080 * data.acc.z),
+                // x: 1.280 + (data.acc.y * 2560),
+                // y: 1440 - (1440 * data.acc.z),
+            });
+        }
     });
     socket.on("disconnect", function () {
         console.log("Socket " + socket.id + " disconnected");
