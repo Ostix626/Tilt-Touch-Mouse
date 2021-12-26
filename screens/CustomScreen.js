@@ -106,7 +106,7 @@ const CustomScreen = () => {
 
   const [subscriptionAcc, setSubscriptionAcc] = useState(null);
 
-  Accelerometer.setUpdateInterval(16);
+  Accelerometer.setUpdateInterval(20);
 
   const _subscribeAcc = () => {
     setSubscriptionAcc(
@@ -136,7 +136,7 @@ const CustomScreen = () => {
   
   const [subscriptionGyro, setSubscriptionGyro] = useState(null);
 
-  Gyroscope.setUpdateInterval(20);
+  Gyroscope.setUpdateInterval(16);
   
   const _subscribeGyro = () => {
     setSubscriptionGyro(
