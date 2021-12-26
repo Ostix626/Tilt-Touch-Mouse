@@ -57,9 +57,9 @@ io.on("connection", function (socket) {
                 // x: X0 + Math.round(data.acc.y * 50),
                 // y: Y0 + Math.round((data.acc.x - 0.5) * 50),
                 // 2) nacin za koji ne treba hardware button
-                x: X0 - Math.round(data.gyro.x * 15) * 1.25,
-                y: Y0 + Math.round(data.gyro.y * 15) * 1.25,
-                // Ustimaj za svoj ekran vrijednosti 50 za 1. nacin i 1.1 za drugi
+                x: X0 - Math.round((data.gyro.x + data.gyro.z) * 15) * 1.25,
+                y: Y0 + Math.round(data.gyro.y * 15) * 1.3,
+                // Ustimaj za svoj ekran vrijednosti 50 za 1. nacin i 1.25 za drugi
                 // Trenutno su nastimane za 2560x1440 rezoluciju
             });
         }
