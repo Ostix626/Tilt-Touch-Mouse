@@ -64,14 +64,16 @@ io.on("connection", (socket) => {
     else if(data.touch.numberActiveTouches == 0)
     {
       setCursorPosition({
-        x: X0 + Math.round(data.acc.y * 50),
-        y: Y0 + Math.round((data.acc.x - 0.5) * 50),
-        // x: X0 + (data.acc.y * 1920),
-        // y: Y0 - ((data.acc.z - 0.5) * 1080),
-        // x: 960 + (data.acc.y * 1920),
-        // y: 1080 - (1080 * data.acc.z),
-        // x: 1.280 + (data.acc.y * 2560),
-        // y: 1440 - (1440 * data.acc.z),
+        // 1) nacin za koji treba hardware button
+        // x: X0 + Math.round(data.acc.y * 50),
+        // y: Y0 + Math.round((data.acc.x - 0.5) * 50),
+
+        // 2) nacin za koji ne treba hardware button
+        x: X0 - Math.round(data.gyro.x * 20) * 1.1,
+        y: Y0 + Math.round(data.gyro.y * 20) * 1.1,
+
+        // Ustimaj za svoj ekran vrijednosti 50 za 1. nacin i 1.1 za drugi
+        // Trenutno su nastimane za 2560x1440 rezoluciju
       });
     }
 
