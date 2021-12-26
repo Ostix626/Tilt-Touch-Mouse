@@ -49,7 +49,7 @@ io.on("connection", (socket) => {
       Y0 = y;
       NUMBER_ACTIVE_TOUCHES = data.touch.numberActiveTouches;
     }
-    else if (data.acc.z !== 0 && NUMBER_ACTIVE_TOUCHES == 0) {
+    else if (NUMBER_ACTIVE_TOUCHES == 0) {
       X0 = x;
       Y0 = y;
     }
@@ -69,8 +69,8 @@ io.on("connection", (socket) => {
         // y: Y0 + Math.round((data.acc.x - 0.5) * 50),
 
         // 2) nacin za koji ne treba hardware button
-        x: X0 - Math.round(data.gyro.x * 20) * 1.1,
-        y: Y0 + Math.round(data.gyro.y * 20) * 1.1,
+        x: X0 - Math.round(data.gyro.x * 15) * 1.25,
+        y: Y0 + Math.round(data.gyro.y * 15) * 1.25,
 
         // Ustimaj za svoj ekran vrijednosti 50 za 1. nacin i 1.1 za drugi
         // Trenutno su nastimane za 2560x1440 rezoluciju
