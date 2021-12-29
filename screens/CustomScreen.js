@@ -106,7 +106,7 @@ const CustomScreen = () => {
 
   const [subscriptionAcc, setSubscriptionAcc] = useState(null);
 
-  Accelerometer.setUpdateInterval(20);
+  Accelerometer.setUpdateInterval(21);
 
   const _subscribeAcc = () => {
     setSubscriptionAcc(

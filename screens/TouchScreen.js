@@ -18,7 +18,7 @@ import Touchable from '../components/wrappers/Touchable';
 // const socket = io.connect(url);
 
 var socket 
-console.log("sock", socket)
+//console.log("sock", socket)
 
 const TouchScreen = props => {
   const SERVER = useSelector(state => state.serverUrl);
@@ -45,7 +45,7 @@ const TouchScreen = props => {
 
   const [subscriptionAcc, setSubscriptionAcc] = useState(null);
 
-  Accelerometer.setUpdateInterval(15);
+  Accelerometer.setUpdateInterval(21);
 
   const _subscribeAcc = () => {
     setSubscriptionAcc(
@@ -73,6 +73,36 @@ const TouchScreen = props => {
     y: 0,
     z: 0,
   });
+
+  const [triggerData2, setTriggerData2] = useState({
+    x: 0,
+    y: 0,
+    z: 0,
+  });
+
+  const [subscriptionGyro, setSubscriptionGyro] = useState(null);
+
+  Gyroscope.setUpdateInterval(16);
+  
+  const _subscribeGyro = () => {
+    setSubscriptionGyro(
+      Gyroscope.addListener(gyroscopeData => {
+        setTriggerData2(gyroscopeData);
+      })
+    );
+  };
+  
+  const _unsubscribeGyro = () => {
+    subscriptionGyro && subscriptionGyro.remove();
+    setSubscriptionGyro(null);
+    setTriggerData2({x: 0, y: 0, z: 0})
+  };
+  
+  useEffect(() => {
+    _subscribeGyro();
+    return () => _unsubscribeGyro();
+  }, []);
+
 
   const [click, setClick] = useState(false)
 
@@ -154,7 +184,7 @@ const TouchScreen = props => {
     }
     socket.emit("data", data);
     if (click) setClick(false);
-  }, [touchData, click, triggerData])
+  }, [touchData, click, triggerData, triggerData2 ])
 
   return (
     <View style={{ flex: 1 }}>

@@ -5,6 +5,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet, Text, View } from 'react-native';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
+import { enableScreens } from 'react-native-screens';
+enableScreens();
 
 import { store, persistor } from './store/store';
 import DrawerNavigator from './navigation/DrawerNavigatior';
