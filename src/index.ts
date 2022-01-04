@@ -24,7 +24,6 @@ server.listen(port, () => {
 
 let X0: number;
 let Y0: number;
-let NUMBER_ACTIVE_TOUCHES = 2;
 
 const io = new Server(server, {
   cors: { origin: "ws://" },
@@ -44,30 +43,11 @@ io.on("connection", (socket) => {
       return;
     }
 
-    console.error(NUMBER_ACTIVE_TOUCHES);
-
     if (data.touch.numberActiveTouches == 0) {
       X0 = x;
       Y0 = y;
     }
-    else if (NUMBER_ACTIVE_TOUCHES !== data.touch.numberActiveTouches) {
-      if (NUMBER_ACTIVE_TOUCHES != 2) {
-        X0 = x;
-        Y0 = y;
-        NUMBER_ACTIVE_TOUCHES = data.touch.numberActiveTouches;
-      }
-      // X0 = x;
-      // Y0 = y;
-      // if (NUMBER_ACTIVE_TOUCHES == 2) {
-      //   NUMBER_ACTIVE_TOUCHES = data.touch.numberActiveTouches;
-      // }
-    }
-    else if (NUMBER_ACTIVE_TOUCHES == 0) {
-      X0 = x;
-      Y0 = y;
-    }
-    // if(data.touch.dx != 0 && data.touch.dy != 0 &&
-    //  data.touch.numberActiveTouches == 1){
+
     if(data.touch.numberActiveTouches == 1){
       setCursorPosition({
         x: X0 + Math.round(data.touch.dx * 2.1),

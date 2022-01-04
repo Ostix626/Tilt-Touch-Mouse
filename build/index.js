@@ -20,7 +20,6 @@ server.listen(port, function () {
 });
 var X0;
 var Y0;
-var NUMBER_ACTIVE_TOUCHES = 2;
 var io = new socket_io_1.Server(server, {
     cors: { origin: "ws://" },
 });
@@ -34,29 +33,10 @@ io.on("connection", function (socket) {
             click(x, y);
             return;
         }
-        console.error(NUMBER_ACTIVE_TOUCHES);
         if (data.touch.numberActiveTouches == 0) {
             X0 = x;
             Y0 = y;
         }
-        else if (NUMBER_ACTIVE_TOUCHES !== data.touch.numberActiveTouches) {
-            if (NUMBER_ACTIVE_TOUCHES != 2) {
-                X0 = x;
-                Y0 = y;
-                NUMBER_ACTIVE_TOUCHES = data.touch.numberActiveTouches;
-            }
-            // X0 = x;
-            // Y0 = y;
-            // if (NUMBER_ACTIVE_TOUCHES == 2) {
-            //   NUMBER_ACTIVE_TOUCHES = data.touch.numberActiveTouches;
-            // }
-        }
-        else if (NUMBER_ACTIVE_TOUCHES == 0) {
-            X0 = x;
-            Y0 = y;
-        }
-        // if(data.touch.dx != 0 && data.touch.dy != 0 &&
-        //  data.touch.numberActiveTouches == 1){
         if (data.touch.numberActiveTouches == 1) {
             (0, node_cursor_1.setCursorPosition)({
                 x: X0 + Math.round(data.touch.dx * 2.1),
