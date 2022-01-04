@@ -20,9 +20,9 @@ server.listen(port, function () {
 });
 var X0;
 var Y0;
-var NUMBER_ACTIVE_TOUCHES = 0;
+var NUMBER_ACTIVE_TOUCHES = 2;
 var io = new socket_io_1.Server(server, {
-    cors: { origin: "http://" },
+    cors: { origin: "ws://" },
 });
 io.on("connection", function (socket) {
     console.log("Socket " + socket.id + " connected");
@@ -34,15 +34,47 @@ io.on("connection", function (socket) {
             click(x, y);
             return;
         }
-        if (NUMBER_ACTIVE_TOUCHES !== data.touch.numberActiveTouches) {
+        console.error(NUMBER_ACTIVE_TOUCHES);
+        if (data.touch.numberActiveTouches == 0) {
             X0 = x;
             Y0 = y;
-            NUMBER_ACTIVE_TOUCHES = data.touch.numberActiveTouches;
         }
-        (0, node_cursor_1.setCursorPosition)({
-            x: X0 + Math.round(data.touch.dx * 2.1),
-            y: Y0 + Math.round(data.touch.dy * 2.1),
-        });
+        else if (NUMBER_ACTIVE_TOUCHES !== data.touch.numberActiveTouches) {
+            if (NUMBER_ACTIVE_TOUCHES != 2) {
+                X0 = x;
+                Y0 = y;
+                NUMBER_ACTIVE_TOUCHES = data.touch.numberActiveTouches;
+            }
+            // X0 = x;
+            // Y0 = y;
+            // if (NUMBER_ACTIVE_TOUCHES == 2) {
+            //   NUMBER_ACTIVE_TOUCHES = data.touch.numberActiveTouches;
+            // }
+        }
+        else if (NUMBER_ACTIVE_TOUCHES == 0) {
+            X0 = x;
+            Y0 = y;
+        }
+        // if(data.touch.dx != 0 && data.touch.dy != 0 &&
+        //  data.touch.numberActiveTouches == 1){
+        if (data.touch.numberActiveTouches == 1) {
+            (0, node_cursor_1.setCursorPosition)({
+                x: X0 + Math.round(data.touch.dx * 2.1),
+                y: Y0 + Math.round(data.touch.dy * 2.1),
+            });
+        }
+        else if (data.touch.numberActiveTouches == 0) {
+            (0, node_cursor_1.setCursorPosition)({
+                // 1) nacin za koji treba hardware button
+                // x: X0 + Math.round(data.acc.y * 50),
+                // y: Y0 + Math.round((data.acc.x - 0.5) * 50),
+                // 2) nacin za koji ne treba hardware button
+                x: X0 - Math.round((data.gyro.x + data.gyro.z) * 15) * 1.25,
+                y: Y0 + Math.round(data.gyro.y * 15) * 1.3,
+                // Ustimaj za svoj ekran vrijednosti 50 za 1. nacin i 1.25 za drugi
+                // Trenutno su nastimane za 2560x1440 rezoluciju
+            });
+        }
     });
     socket.on("disconnect", function () {
         console.log("Socket " + socket.id + " disconnected");
