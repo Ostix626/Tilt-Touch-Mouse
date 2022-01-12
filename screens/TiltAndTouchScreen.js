@@ -174,7 +174,7 @@ const TiltAndTouchScreen = props => {
     <View style={styles.container}>
             <View style={styles.touchpad} {...subscriptionTouch? {...panResponder.panHandlers} : null}>
           <View style={styles.sensorInfo}>
-            <Text style={styles.text}>
+            {/* <Text style={styles.text}>
               Gyroscope: {"\n"} {"\n"}
               x: {gyroData.x.toFixed(2)} {"\n"}
               y: {gyroData.y.toFixed(2)} {"\n"}
@@ -198,7 +198,7 @@ const TiltAndTouchScreen = props => {
               vy: {touchData.vy} {"\n"}
               x0: {touchData.x0} {"\n"}
               y0: {touchData.y0} 
-            </Text>
+            </Text> */}
           </View>
       </View>
       <Touchable style={styles.button} onPressIn={() => setClick(true)}>

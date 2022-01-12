@@ -122,7 +122,8 @@ const TiltScreen = props => {
       <Touchable style={styles.touchable} onPressIn={() => setClick(true)}>
         {/* <View style={styles.container}> */}
           <Text style={styles.text}>
-            Gyroscope: {"\n"} {"\n"}
+            CLICK
+            {/* Gyroscope: {"\n"} {"\n"}
             x: {gyroData.x.toFixed(2)} {"\n"}
             y: {gyroData.y.toFixed(2)} {"\n"}
             z: {gyroData.z.toFixed(2)} {"\n"} {"\n"} {"\n"}
@@ -130,7 +131,7 @@ const TiltScreen = props => {
             Accelerometer: {"\n"} {"\n"}
             x: {accData.x.toFixed(2)} {"\n"}
             y: {accData.y.toFixed(2)} {"\n"}
-            z: {accData.z.toFixed(2)}
+            z: {accData.z.toFixed(2)} */}
           </Text>
           
         {/* </View> */}

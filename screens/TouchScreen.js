@@ -189,7 +189,7 @@ const TouchScreen = props => {
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.container} {...subscriptionTouch? {...panResponder.panHandlers} : null}>
-        <Text style={styles.text}>
+        {/* <Text style={styles.text}>
           Touch: {"\n"}{"\n"}
           dx: {touchData.dx} {"\n"}
           dy: {touchData.dy} {"\n"}
@@ -201,7 +201,7 @@ const TouchScreen = props => {
           vy: {touchData.vy} {"\n"}
           x0: {touchData.x0} {"\n"}
           y0: {touchData.y0} 
-        </Text>
+        </Text> */}
       </View>
       <Touchable style={styles.button} onPressIn={() => setClick(true)}>
         <Text>CLICK</Text>

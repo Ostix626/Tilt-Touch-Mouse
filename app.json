@@ -2,7 +2,7 @@
   "expo": {
     "name": "TiltTouchMouse",
     "slug": "TiltTouchMouse",
-    "version": "1.0.0",
+    "version": "1.2.0",
     "orientation": "landscape",
     "icon": "./assets/misonja.png",
     "splash": {
@@ -22,7 +22,7 @@
     "android": {
       "package": "tilt.touch.mouse",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/misonja.png",
         "backgroundColor": "#FFFFFF"
       }
     },
