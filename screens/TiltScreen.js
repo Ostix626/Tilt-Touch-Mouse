@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View} from 'react-native';
 import { Gyroscope, Accelerometer } from 'expo-sensors';
@@ -6,17 +5,8 @@ import { PanGestureHandler } from 'react-native-gesture-handler';
 import { io } from "socket.io-client";
 import { useSelector, useDispatch } from 'react-redux';
 
-import {store} from '../store/store';
 import Touchable from '../components/wrappers/Touchable';
-import { DrawerContentScrollView } from '@react-navigation/drawer';
 
-// const socket = io.connect("http://192.168.1.110:3001");
-
-// const state = store.getState();
-
-// const url = state.serverUrl.baseUrl
-// console.log(url)
-// const socket = io.connect(url);
 
 var socket 
 
@@ -120,21 +110,9 @@ const TiltScreen = props => {
   return (
     <View style={styles.container}>
       <Touchable style={styles.touchable} onPressIn={() => setClick(true)}>
-        {/* <View style={styles.container}> */}
           <Text style={styles.text}>
             CLICK
-            {/* Gyroscope: {"\n"} {"\n"}
-            x: {gyroData.x.toFixed(2)} {"\n"}
-            y: {gyroData.y.toFixed(2)} {"\n"}
-            z: {gyroData.z.toFixed(2)} {"\n"} {"\n"} {"\n"}
-
-            Accelerometer: {"\n"} {"\n"}
-            x: {accData.x.toFixed(2)} {"\n"}
-            y: {accData.y.toFixed(2)} {"\n"}
-            z: {accData.z.toFixed(2)} */}
           </Text>
-          
-        {/* </View> */}
       </Touchable>
     </View>
   );
@@ -144,20 +122,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    // alignItems: 'center',
-    // justifyContent: 'center',
-    
   },
   clickArea: {
     flex: 1,
   },
   touchable: {
-    // backgroundColor: 'grey',
     alignItems: 'center',
     height: '100%',
-    // top: 0, bottom: 0, left: 0, right: 0,
     justifyContent: 'space-evenly', 
-    // padding: 80
   },
 
 

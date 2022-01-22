@@ -6,14 +6,6 @@ import { PanGestureHandler } from 'react-native-gesture-handler';
 import { io } from "socket.io-client";
 import { useSelector, useDispatch } from 'react-redux';
 
-// const socket = io.connect("http://192.168.1.110:3001");
-// import {store} from '../store/store';
-// const state = store.getState();
-
-// const url = state.serverUrl.baseUrl
-// console.log(url)
-// const socket = io.connect(url);
-
 
 var socket 
 
@@ -53,9 +45,6 @@ const CustomScreen = () => {
       onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
 
       onPanResponderGrant: (evt, gestureState) => {
-        // The gesture has started. Show visual feedback so the user knows
-        // what is happening!
-        // gestureState.d{x,y} will be set to zero now
       },
       onPanResponderMove: (evt, gestureState) => {
         setTouchData(gestureState)
@@ -72,25 +61,14 @@ const CustomScreen = () => {
           x0: gestureState.x0,
           y0: gestureState.y0,
         })
-        
-        // The most recent move distance is gestureState.move{X,Y}
-        // The accumulated gesture distance since becoming responder is
-        // gestureState.d{x,y}
       },
       onPanResponderTerminationRequest: (evt, gestureState) => true,
       onPanResponderRelease: (evt, gestureState) => {
         setTouchData(gestureState)
-
-        // The user has released all touches while this view is the
-        // responder. This typically means a gesture has succeeded
       },
       onPanResponderTerminate: (evt, gestureState) => {
-        // Another component has become the responder, so this gesture
-        // should be cancelled
       },
       onShouldBlockNativeResponder: (evt, gestureState) => {
-        // Returns whether this component should block native components from becoming the JS
-        // responder. Returns true by default. Is currently only supported on android.
         return true;
       },
     })

@@ -1,20 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
-// import { Button } from 'react-native-paper';
 import { io } from "socket.io-client";
 import { useSelector, useDispatch } from 'react-redux';
 
 import Input from '../components/Input';
 import KeyboardAvoidAndDismiss from '../components/wrappers/KeyboardAvoidAndDismiss';
 import { setIpAddress } from '../store/actions/serverURL';
-
-// const socket = io.connect("http://192.168.1.110:3001");
-// import {store} from '../store/store';
-// const state = store.getState();
-
-// const url = state.serverUrl.baseUrl
-// console.log(url)
-// var socket = io.connect(url);
 
 var socket
 
@@ -24,12 +15,7 @@ const ConnectScreen = props => {
   const [serverIP, setServerIP] = useState(SERVER.ip);
   const [status, setStatus] = useState(socket != undefined? socket.connected : false);
 
-  // const socket = io.connect(SERVER.baseUrl)
-  // socket = io.connect(SERVER.baseUrl)
-
-
   const sendToServer = () => {
-    // socket.emit("data", serverIP);
     dispatch(setIpAddress(serverIP));
     const url = "http://" + serverIP + ":3001";
     socket = io.connect(url)

@@ -8,26 +8,14 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import Touchable from '../components/wrappers/Touchable';
 
-
-// const socket = io.connect("http://192.168.1.110:3001");
-// import {store} from '../store/store';
-// const state = store.getState();
-
-// const url = state.serverUrl.baseUrl
-// console.log("TouchScreen", url)
-// const socket = io.connect(url);
-
 var socket 
-//console.log("sock", socket)
 
 const TouchScreen = props => {
   const SERVER = useSelector(state => state.serverUrl);
   useEffect(() => {
     if(socket == undefined || !socket.connected) {
       socket = io.connect(SERVER.baseUrl)
-      // console.log("TouchScreen", SERVER.baseUrl)
     }
-    // console.log("con",socket.connected)
   }, [])
 
 
@@ -132,9 +120,6 @@ const TouchScreen = props => {
       onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
 
       onPanResponderGrant: (evt, gestureState) => {
-        // The gesture has started. Show visual feedback so the user knows
-        // what is happening!
-        // gestureState.d{x,y} will be set to zero now
       },
       onPanResponderMove: (evt, gestureState) => {
         setTouchData(gestureState)
@@ -151,25 +136,14 @@ const TouchScreen = props => {
           x0: gestureState.x0,
           y0: gestureState.y0,
         })
-        
-        // The most recent move distance is gestureState.move{X,Y}
-        // The accumulated gesture distance since becoming responder is
-        // gestureState.d{x,y}
       },
       onPanResponderTerminationRequest: (evt, gestureState) => true,
       onPanResponderRelease: (evt, gestureState) => {
         setTouchData(gestureState)
-
-        // The user has released all touches while this view is the
-        // responder. This typically means a gesture has succeeded
       },
       onPanResponderTerminate: (evt, gestureState) => {
-        // Another component has become the responder, so this gesture
-        // should be cancelled
       },
       onShouldBlockNativeResponder: (evt, gestureState) => {
-        // Returns whether this component should block native components from becoming the JS
-        // responder. Returns true by default. Is currently only supported on android.
         return true;
       },
     })
@@ -189,19 +163,6 @@ const TouchScreen = props => {
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.container} {...subscriptionTouch? {...panResponder.panHandlers} : null}>
-        {/* <Text style={styles.text}>
-          Touch: {"\n"}{"\n"}
-          dx: {touchData.dx} {"\n"}
-          dy: {touchData.dy} {"\n"}
-          moveX: {touchData.moveX} {"\n"}
-          moveY: {touchData.moveY} {"\n"}
-          numberActiveTouches: {touchData.numberActiveTouches} {"\n"}
-          stateID: {touchData.stateID} {"\n"}
-          vx: {touchData.vx} {"\n"}
-          vy: {touchData.vy} {"\n"}
-          x0: {touchData.x0} {"\n"}
-          y0: {touchData.y0} 
-        </Text> */}
       </View>
       <Touchable style={styles.button} onPressIn={() => setClick(true)}>
         <Text>CLICK</Text>
@@ -223,7 +184,6 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     justifyContent: 'center',
     padding: 18,
-    // height: 50
   }
 });
 
